@@ -1,22 +1,11 @@
-/* ==========================================================================
-   AUREX Full-Stack Engineering Internship — Month 1, Week 4
-   Task Management Application Stylesheet (Pure CSS3)
-   Author: Sahrish Yaseen
-   ========================================================================== */
-
-/* --------------------------------------------------------------------------
-   CSS Custom Properties (Design Tokens & Color Palette)
-   -------------------------------------------------------------------------- */
 :root {
   --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
   
-  /* Primary Brand Colors */
   --primary: #4f46e5;
   --primary-hover: #4338ca;
   --primary-light: #eef2ff;
   --primary-focus: rgba(79, 70, 229, 0.25);
 
-  /* Status Colors */
   --success: #10b981;
   --success-light: #ecfdf5;
   --danger: #ef4444;
@@ -24,7 +13,6 @@
   --danger-light: #fef2f2;
   --warning: #f59e0b;
 
-  /* Neutrals & Dark Theme Accents */
   --bg-gradient-start: #f8fafc;
   --bg-gradient-end: #e2e8f0;
   --surface-card: #ffffff;
@@ -37,26 +25,20 @@
   --border-color: #e2e8f0;
   --border-focus: #6366f1;
 
-  /* Elevations & Shadows */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
 
-  /* Radii */
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 16px;
   --radius-pill: 9999px;
 
-  /* Transitions */
   --transition-fast: 150ms ease-in-out;
   --transition-normal: 250ms ease-in-out;
 }
 
-/* --------------------------------------------------------------------------
-   Global Reset & Base Setup
-   -------------------------------------------------------------------------- */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -81,7 +63,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Accessible Screen Reader Only utility */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -94,9 +75,6 @@ body {
   border-width: 0;
 }
 
-/* --------------------------------------------------------------------------
-   App Container Layout
-   -------------------------------------------------------------------------- */
 .app-wrapper {
   width: 100%;
   max-width: 760px;
@@ -106,9 +84,6 @@ body {
   margin: 0 auto;
 }
 
-/* --------------------------------------------------------------------------
-   Header & Statistics
-   -------------------------------------------------------------------------- */
 .app-header {
   background: var(--surface-card);
   border-radius: var(--radius-lg);
@@ -184,7 +159,6 @@ body {
   font-weight: 500;
 }
 
-/* Statistics Bar */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -234,9 +208,6 @@ body {
   color: var(--success);
 }
 
-/* --------------------------------------------------------------------------
-   Main Content Card
-   -------------------------------------------------------------------------- */
 .main-card {
   background: var(--surface-card);
   border-radius: var(--radius-lg);
@@ -248,9 +219,6 @@ body {
   gap: 1.5rem;
 }
 
-/* --------------------------------------------------------------------------
-   Task Creation Form & Validation
-   -------------------------------------------------------------------------- */
 .form-section {
   display: flex;
   flex-direction: column;
@@ -300,7 +268,6 @@ body {
   40%, 80% { transform: translateX(4px); }
 }
 
-/* Validation Feedback Alert */
 .validation-message {
   display: flex;
   align-items: center;
@@ -321,9 +288,6 @@ body {
   font-weight: 700;
 }
 
-/* --------------------------------------------------------------------------
-   Buttons & Controls
-   -------------------------------------------------------------------------- */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -382,9 +346,6 @@ body {
   pointer-events: none;
 }
 
-/* --------------------------------------------------------------------------
-   Toolbar & Filters
-   -------------------------------------------------------------------------- */
 .toolbar-section {
   display: flex;
   align-items: center;
@@ -444,9 +405,6 @@ body {
   color: var(--primary);
 }
 
-/* --------------------------------------------------------------------------
-   Task List & Task Item Styling
-   -------------------------------------------------------------------------- */
 .tasks-container {
   display: flex;
   flex-direction: column;
@@ -478,7 +436,6 @@ body {
   box-shadow: var(--shadow-md);
 }
 
-/* Completed Task Styling */
 .task-item.completed {
   background-color: var(--surface-subtle);
   border-color: #e2e8f0;
@@ -494,7 +451,6 @@ body {
   color: var(--success);
 }
 
-/* Left Section: Checkbox & Text */
 .task-content {
   display: flex;
   align-items: center;
@@ -503,7 +459,6 @@ body {
   min-width: 0;
 }
 
-/* Custom Checkbox Toggle */
 .task-checkbox-btn {
   width: 24px;
   height: 24px;
@@ -532,7 +487,6 @@ body {
   color: #ffffff;
 }
 
-/* Text and Meta Details */
 .task-details {
   display: flex;
   flex-direction: column;
@@ -565,7 +519,6 @@ body {
   color: var(--primary);
 }
 
-/* Right Section: Action Buttons */
 .task-actions {
   display: flex;
   align-items: center;
@@ -605,9 +558,6 @@ body {
   border-color: rgba(239, 68, 68, 0.2);
 }
 
-/* --------------------------------------------------------------------------
-   Editing State View
-   -------------------------------------------------------------------------- */
 .task-item.is-editing {
   background: #ffffff;
   border: 2px solid var(--primary);
@@ -667,9 +617,6 @@ body {
   background: #e2e8f0;
 }
 
-/* --------------------------------------------------------------------------
-   Empty State
-   -------------------------------------------------------------------------- */
 .empty-state {
   display: flex;
   flex-direction: column;
@@ -705,9 +652,6 @@ body {
   max-width: 320px;
 }
 
-/* --------------------------------------------------------------------------
-   Footer
-   -------------------------------------------------------------------------- */
 .app-footer {
   display: flex;
   justify-content: space-between;
@@ -749,9 +693,6 @@ body {
   50% { opacity: 0.4; transform: scale(0.85); }
 }
 
-/* --------------------------------------------------------------------------
-   Responsive Breakpoints (Mobile, Tablet, Desktop)
-   -------------------------------------------------------------------------- */
 @media (max-width: 640px) {
   body {
     padding: 1rem 0.75rem;

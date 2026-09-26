@@ -9,7 +9,6 @@
 </head>
 <body>
   <div class="app-wrapper">
-    <!-- Header Section -->
     <header class="app-header">
       <div class="header-content">
         <div class="brand">
@@ -25,7 +24,6 @@
         </div>
       </div>
 
-      <!-- Quick Metrics Summary Bar -->
       <section class="stats-grid" aria-label="Task Statistics">
         <div class="stat-card">
           <span class="stat-label">Total Tasks</span>
@@ -42,9 +40,7 @@
       </section>
     </header>
 
-    <!-- Main Application Card -->
     <main class="main-card">
-      <!-- Task Creation Form -->
       <section class="form-section" aria-label="Add New Task">
         <form id="task-form" class="task-form" novalidate>
           <div class="input-group">
@@ -64,7 +60,6 @@
               <span class="btn-text">Add Task</span>
             </button>
           </div>
-          <!-- Live Validation Feedback Message -->
           <div id="validation-message" class="validation-message hidden" role="alert" aria-live="polite">
             <span class="validation-icon" aria-hidden="true">⚠</span>
             <span id="validation-text">Please enter a valid task title.</span>
@@ -72,7 +67,6 @@
         </form>
       </section>
 
-      <!-- Task Controls & Filters Toolbar -->
       <section class="toolbar-section" aria-label="Task Filters and Actions">
         <div class="filters-group" role="tablist" aria-label="Filter tasks">
           <button 
@@ -120,13 +114,10 @@
         </div>
       </section>
 
-      <!-- Task List Container -->
       <section class="tasks-container" aria-label="Task List">
         <ul id="task-list" class="task-list" role="list">
-          <!-- Dynamically populated by main.js -->
         </ul>
 
-        <!-- Empty State Message -->
         <div id="empty-state" class="empty-state">
           <div class="empty-icon" aria-hidden="true">📝</div>
           <h2 class="empty-title" id="empty-title">No tasks yet</h2>
@@ -135,7 +126,6 @@
       </section>
     </main>
 
-    <!-- Footer Information -->
     <footer class="app-footer">
       <div class="footer-details">
         <p><strong>AUREX Full-Stack Engineering Internship</strong> — Month 1, Week 4</p>
@@ -148,7 +138,6 @@
     </footer>
   </div>
 
-  <!-- JavaScript Entry Point -->
   <script src="scripts/main.js"></script>
 </body>
 </html>
