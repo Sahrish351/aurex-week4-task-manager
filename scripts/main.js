@@ -54,10 +54,17 @@ function saveTasksToStorage(taskArray) {
 
 const formatTaskDate = (timestamp) => {
   const date = new Date(timestamp);
+  const now = new Date();
+  const isToday = date.toDateString() === now.toDateString();
   const hours = date.getHours().toString().padStart(2, '0');
   const minutes = date.getMinutes().toString().padStart(2, '0');
+  
+  if (isToday) {
+    return `Today at ${hours}:${minutes}`;
+  }
+  
   const day = date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
-  return `${day}, ${hours}:${minutes}`;
+  return `${day} at ${hours}:${minutes}`;
 };
 
 const generateUniqueId = () => {
@@ -97,13 +104,19 @@ function getFilteredTasks(filterType) {
 function showValidationError(message) {
   validationText.textContent = message;
   validationMessage.classList.remove('hidden');
-  taskInput.classList.add('input-error');
+  const container = taskInput.closest('.input-container');
+  if (container) {
+    container.classList.add('has-error');
+  }
   taskInput.focus();
 }
 
 function clearValidationError() {
   validationMessage.classList.add('hidden');
-  taskInput.classList.remove('input-error');
+  const container = taskInput.closest('.input-container');
+  if (container) {
+    container.classList.remove('has-error');
+  }
 }
 
 function validateTaskTitle(rawTitle) {
@@ -187,12 +200,12 @@ function createTaskElement(task) {
   const isEditing = (currentlyEditingId === id);
 
   const li = document.createElement('li');
-  li.className = `task-item ${completed ? 'completed' : ''} ${isEditing ? 'is-editing' : ''}`;
+  li.className = `task-row ${completed ? 'is-completed' : ''} ${isEditing ? 'is-editing' : ''}`;
   li.dataset.id = id;
 
   if (isEditing) {
     li.innerHTML = `
-      <div class="edit-form-wrapper">
+      <div class="edit-mode-container">
         <input 
           type="text" 
           class="edit-input" 
@@ -200,7 +213,7 @@ function createTaskElement(task) {
           aria-label="Edit task title"
           maxlength="150"
         />
-        <div class="edit-actions">
+        <div class="edit-btn-group">
           <button type="button" class="btn-save" title="Save changes">Save</button>
           <button type="button" class="btn-cancel" title="Cancel edit">Cancel</button>
         </div>
@@ -218,25 +231,27 @@ function createTaskElement(task) {
     const formattedDate = formatTaskDate(createdAt);
 
     li.innerHTML = `
-      <div class="task-content">
+      <div class="task-left">
         <button 
           type="button" 
           class="task-checkbox-btn" 
           aria-label="Mark task as ${completed ? 'active' : 'completed'}" 
           title="Toggle completion"
         >
-          <svg class="check-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <svg class="check-svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="20 6 9 17 4 12"></polyline>
           </svg>
         </button>
-        <div class="task-details">
-          <span class="task-text">${escapeHtml(title)}</span>
-          <div class="task-meta">
-            <span class="task-date">${formattedDate}</span>
+        <div class="task-text-group">
+          <span class="task-title-text">${escapeHtml(title)}</span>
+          <div class="task-meta-line">
+            <span class="meta-date">${formattedDate}</span>
+            <span class="meta-separator">·</span>
+            <span class="meta-status ${completed ? 'status-completed' : 'status-active'}">${completed ? 'Completed' : 'Active'}</span>
           </div>
         </div>
       </div>
-      <div class="task-actions">
+      <div class="task-right-actions">
         <button 
           type="button" 
           class="action-btn btn-edit" 
@@ -244,8 +259,10 @@ function createTaskElement(task) {
           aria-label="Edit task"
           ${completed ? 'disabled' : ''}
         >
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-          <span class="action-text">Edit</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+          </svg>
         </button>
         <button 
           type="button" 
@@ -253,8 +270,12 @@ function createTaskElement(task) {
           title="Delete this task"
           aria-label="Delete task"
         >
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-          <span class="action-text">Delete</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            <line x1="10" y1="11" x2="10" y2="17"></line>
+            <line x1="14" y1="11" x2="14" y2="17"></line>
+          </svg>
         </button>
       </div>
     `;
@@ -339,10 +360,10 @@ function handleTaskFormSubmit(event) {
 
 function handleTaskListClick(event) {
   const target = event.target;
-  const taskItem = target.closest('.task-item');
-  if (!taskItem) return;
+  const taskRow = target.closest('.task-row');
+  if (!taskRow) return;
 
-  const taskId = taskItem.dataset.id;
+  const taskId = taskRow.dataset.id;
 
   if (target.closest('.task-checkbox-btn')) {
     toggleTaskCompletion(taskId);
@@ -361,7 +382,7 @@ function handleTaskListClick(event) {
   }
 
   if (target.closest('.btn-save')) {
-    const editInput = taskItem.querySelector('.edit-input');
+    const editInput = taskRow.querySelector('.edit-input');
     if (editInput) {
       commitTaskEdit(taskId, editInput.value);
     }
@@ -387,8 +408,8 @@ function commitTaskEdit(taskId, newTitle) {
 function handleTaskListKeydown(event) {
   const target = event.target;
   if (target.classList.contains('edit-input')) {
-    const taskItem = target.closest('.task-item');
-    const taskId = taskItem.dataset.id;
+    const taskRow = target.closest('.task-row');
+    const taskId = taskRow.dataset.id;
 
     if (event.key === 'Enter') {
       event.preventDefault();

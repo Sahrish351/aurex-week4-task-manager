@@ -7,30 +7,36 @@
   <title>Task Manager | My Productivity</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
-  <div class="bg-glow bg-glow-1" aria-hidden="true"></div>
-  <div class="bg-glow bg-glow-2" aria-hidden="true"></div>
+  <div class="ambient-glow glow-top" aria-hidden="true"></div>
+  <div class="ambient-glow glow-bottom" aria-hidden="true"></div>
 
   <div class="app-wrapper">
-    <header class="app-hero">
-      <div class="hero-top-row">
-        <div class="hero-label">
-          <span class="hero-sparkle" aria-hidden="true">✦</span>
-          <span>MY PRODUCTIVITY</span>
-        </div>
-        <div class="date-pill" id="current-date">Today</div>
+    <header class="hero-header">
+      <div class="eyebrow-badge">
+        <span class="eyebrow-sparkle" aria-hidden="true">✦</span>
+        <span>MY PRODUCTIVITY</span>
       </div>
-      <h1 class="hero-title">Task Manager</h1>
-      <p class="hero-subtitle">Organize your day, one task at a time.</p>
+      <h1 class="hero-heading">Task Manager</h1>
+      <p class="hero-subheading">Organize your day, one task at a time.</p>
+      <div class="hero-meta">
+        <span class="meta-pill" id="current-date">Today</span>
+      </div>
     </header>
 
     <main class="main-card">
-      <section class="input-section" aria-label="Create task">
+      <section class="section-input" aria-label="Add new task">
         <form id="task-form" class="task-form" novalidate>
-          <div class="input-bar">
+          <div class="input-container">
+            <div class="input-icon-slot" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </div>
             <label for="task-input" class="sr-only">Add a new task</label>
             <input 
               type="text" 
@@ -43,34 +49,67 @@
               required
             >
             <button type="submit" id="add-task-btn" class="btn-add">
-              <span class="btn-add-icon" aria-hidden="true">+</span>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
               <span>Add Task</span>
             </button>
           </div>
           <div id="validation-message" class="validation-message hidden" role="alert" aria-live="polite">
-            <svg class="validation-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            <svg class="validation-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
             <span id="validation-text">Please enter a task before adding it.</span>
           </div>
         </form>
       </section>
 
-      <section class="summary-section" aria-label="Task statistics">
-        <div class="stat-pill stat-pill-total">
-          <span class="stat-tag">TOTAL</span>
-          <span class="stat-num" id="stat-total">0</span>
+      <section class="section-stats" aria-label="Task statistics">
+        <div class="metric-card metric-total">
+          <div class="metric-icon-wrap" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+              <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+            </svg>
+          </div>
+          <div class="metric-info">
+            <span class="metric-label">TOTAL</span>
+            <span class="metric-value" id="stat-total">0</span>
+          </div>
         </div>
-        <div class="stat-pill stat-pill-active">
-          <span class="stat-tag">ACTIVE</span>
-          <span class="stat-num" id="stat-active">0</span>
+
+        <div class="metric-card metric-active">
+          <div class="metric-icon-wrap" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+          </div>
+          <div class="metric-info">
+            <span class="metric-label">ACTIVE</span>
+            <span class="metric-value" id="stat-active">0</span>
+          </div>
         </div>
-        <div class="stat-pill stat-pill-completed">
-          <span class="stat-tag">COMPLETED</span>
-          <span class="stat-num" id="stat-completed">0</span>
+
+        <div class="metric-card metric-completed">
+          <div class="metric-icon-wrap" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+          </div>
+          <div class="metric-info">
+            <span class="metric-label">COMPLETED</span>
+            <span class="metric-value" id="stat-completed">0</span>
+          </div>
         </div>
       </section>
 
-      <section class="toolbar-row" aria-label="Task filters and actions">
-        <div class="segmented-filters" role="tablist" aria-label="Task filters">
+      <section class="section-toolbar" aria-label="Filter and actions">
+        <div class="segmented-control" role="tablist" aria-label="Filter tasks">
           <button 
             type="button" 
             class="filter-btn active" 
@@ -103,26 +142,24 @@
           </button>
         </div>
 
-        <div class="toolbar-actions">
-          <button 
-            type="button" 
-            id="clear-completed-btn" 
-            class="btn-clear" 
-            title="Clear all completed tasks"
-            disabled
-          >
-            Clear Completed
-          </button>
-        </div>
+        <button 
+          type="button" 
+          id="clear-completed-btn" 
+          class="btn-clear-completed" 
+          title="Clear all completed tasks"
+          disabled
+        >
+          Clear Completed
+        </button>
       </section>
 
-      <section class="tasks-container" aria-label="Task list">
+      <section class="section-tasks" aria-label="Task list container">
         <ul id="task-list" class="task-list" role="list">
         </ul>
 
         <div id="empty-state" class="empty-state">
-          <div class="empty-icon-wrap" aria-hidden="true">
-            <svg class="empty-svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <div class="empty-icon-bubble" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
               <path d="M12 20h9"></path>
               <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
             </svg>
@@ -134,12 +171,12 @@
     </main>
 
     <footer class="app-footer">
-      <div class="footer-info">
+      <div class="footer-text">
         <p>AUREX Full-Stack Internship — Month 1, Week 4</p>
-        <p>Designed &amp; built by <strong>Sahrish Yaseen</strong></p>
+        <p>Built with Vanilla JavaScript &amp; localStorage by <strong>Sahrish Yaseen</strong></p>
       </div>
-      <div class="storage-badge">
-        <span class="pulse-dot" aria-hidden="true"></span>
+      <div class="storage-status">
+        <span class="status-dot" aria-hidden="true"></span>
         <span>Storage Synced</span>
       </div>
     </footer>
