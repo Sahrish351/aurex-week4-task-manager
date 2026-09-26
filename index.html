@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AUREX Full-Stack Internship Week 4 - JavaScript Task Management Application with DOM Manipulation and LocalStorage Persistence.">
+  <title>TaskMaster | AUREX Task Management Application</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <div class="app-wrapper">
+    <!-- Header Section -->
+    <header class="app-header">
+      <div class="header-content">
+        <div class="brand">
+          <div class="brand-icon" aria-hidden="true">✓</div>
+          <div>
+            <h1 class="app-title">TaskMaster</h1>
+            <p class="app-subtitle">AUREX Internship — Month 1, Week 4 Project</p>
+          </div>
+        </div>
+        <div class="header-meta">
+          <span class="badge-role">Frontend Foundation</span>
+          <span class="date-display" id="current-date">Today</span>
+        </div>
+      </div>
+
+      <!-- Quick Metrics Summary Bar -->
+      <section class="stats-grid" aria-label="Task Statistics">
+        <div class="stat-card">
+          <span class="stat-label">Total Tasks</span>
+          <span class="stat-value" id="stat-total">0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Active</span>
+          <span class="stat-value stat-active" id="stat-active">0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Completed</span>
+          <span class="stat-value stat-completed" id="stat-completed">0</span>
+        </div>
+      </section>
+    </header>
+
+    <!-- Main Application Card -->
+    <main class="main-card">
+      <!-- Task Creation Form -->
+      <section class="form-section" aria-label="Add New Task">
+        <form id="task-form" class="task-form" novalidate>
+          <div class="input-group">
+            <label for="task-input" class="sr-only">Task description</label>
+            <input 
+              type="text" 
+              id="task-input" 
+              name="taskInput"
+              class="task-input" 
+              placeholder="What needs to be accomplished today?" 
+              autocomplete="off"
+              maxlength="150"
+              required
+            >
+            <button type="submit" id="add-task-btn" class="btn btn-primary">
+              <span class="btn-icon" aria-hidden="true">+</span>
+              <span class="btn-text">Add Task</span>
+            </button>
+          </div>
+          <!-- Live Validation Feedback Message -->
+          <div id="validation-message" class="validation-message hidden" role="alert" aria-live="polite">
+            <span class="validation-icon" aria-hidden="true">⚠</span>
+            <span id="validation-text">Please enter a valid task title.</span>
+          </div>
+        </form>
+      </section>
+
+      <!-- Task Controls & Filters Toolbar -->
+      <section class="toolbar-section" aria-label="Task Filters and Actions">
+        <div class="filters-group" role="tablist" aria-label="Filter tasks">
+          <button 
+            type="button" 
+            class="filter-btn active" 
+            data-filter="all" 
+            role="tab" 
+            aria-selected="true"
+            id="filter-all"
+          >
+            All <span class="filter-count" id="count-all">0</span>
+          </button>
+          <button 
+            type="button" 
+            class="filter-btn" 
+            data-filter="active" 
+            role="tab" 
+            aria-selected="false"
+            id="filter-active"
+          >
+            Active <span class="filter-count" id="count-active">0</span>
+          </button>
+          <button 
+            type="button" 
+            class="filter-btn" 
+            data-filter="completed" 
+            role="tab" 
+            aria-selected="false"
+            id="filter-completed"
+          >
+            Completed <span class="filter-count" id="count-completed">0</span>
+          </button>
+        </div>
+
+        <div class="toolbar-actions">
+          <button 
+            type="button" 
+            id="clear-completed-btn" 
+            class="btn btn-ghost" 
+            title="Delete all completed tasks"
+            disabled
+          >
+            Clear Completed
+          </button>
+        </div>
+      </section>
+
+      <!-- Task List Container -->
+      <section class="tasks-container" aria-label="Task List">
+        <ul id="task-list" class="task-list" role="list">
+          <!-- Dynamically populated by main.js -->
+        </ul>
+
+        <!-- Empty State Message -->
+        <div id="empty-state" class="empty-state">
+          <div class="empty-icon" aria-hidden="true">📝</div>
+          <h2 class="empty-title" id="empty-title">No tasks yet</h2>
+          <p class="empty-description" id="empty-description">Add your first task above to start organizing your day!</p>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Information -->
+    <footer class="app-footer">
+      <div class="footer-details">
+        <p><strong>AUREX Full-Stack Engineering Internship</strong> — Month 1, Week 4</p>
+        <p>Built with Vanilla JavaScript, HTML5, CSS3 &amp; localStorage by <strong>Sahrish Yaseen</strong></p>
+      </div>
+      <div class="storage-indicator">
+        <span class="indicator-dot" aria-hidden="true"></span>
+        <span>localStorage Sync: Active</span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- JavaScript Entry Point -->
+  <script src="scripts/main.js"></script>
+</body>
+</html>
