@@ -57,7 +57,7 @@ const formatTaskDate = (timestamp) => {
   const hours = date.getHours().toString().padStart(2, '0');
   const minutes = date.getMinutes().toString().padStart(2, '0');
   const day = date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
-  return `${day} at ${hours}:${minutes}`;
+  return `${day}, ${hours}:${minutes}`;
 };
 
 const generateUniqueId = () => {
@@ -108,13 +108,13 @@ function clearValidationError() {
 
 function validateTaskTitle(rawTitle) {
   if (typeof rawTitle !== 'string') {
-    return { isValid: false, error: 'Invalid input type.' };
+    return { isValid: false, error: 'Please enter a valid task title.' };
   }
 
   const trimmed = rawTitle.trim();
 
   if (trimmed.length === 0) {
-    return { isValid: false, error: 'Task title cannot be empty or whitespace only.' };
+    return { isValid: false, error: 'Please enter a task before adding it.' };
   }
 
   if (trimmed.length < 2) {
@@ -200,8 +200,10 @@ function createTaskElement(task) {
           aria-label="Edit task title"
           maxlength="150"
         />
-        <button type="button" class="btn btn-save" title="Save changes">Save</button>
-        <button type="button" class="btn btn-cancel" title="Cancel edit">Cancel</button>
+        <div class="edit-actions">
+          <button type="button" class="btn-save" title="Save changes">Save</button>
+          <button type="button" class="btn-cancel" title="Cancel edit">Cancel</button>
+        </div>
       </div>
     `;
 
@@ -214,7 +216,6 @@ function createTaskElement(task) {
     }
   } else {
     const formattedDate = formatTaskDate(createdAt);
-    const statusLabel = completed ? 'Completed' : 'Active';
 
     li.innerHTML = `
       <div class="task-content">
@@ -224,13 +225,14 @@ function createTaskElement(task) {
           aria-label="Mark task as ${completed ? 'active' : 'completed'}" 
           title="Toggle completion"
         >
-          ${completed ? '✓' : ''}
+          <svg class="check-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
         </button>
         <div class="task-details">
           <span class="task-text">${escapeHtml(title)}</span>
           <div class="task-meta">
-            <span class="task-badge">${statusLabel}</span>
-            <span>Created ${formattedDate}</span>
+            <span class="task-date">${formattedDate}</span>
           </div>
         </div>
       </div>
@@ -239,16 +241,20 @@ function createTaskElement(task) {
           type="button" 
           class="action-btn btn-edit" 
           title="Edit this task"
+          aria-label="Edit task"
           ${completed ? 'disabled' : ''}
         >
-          ✎ Edit
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          <span class="action-text">Edit</span>
         </button>
         <button 
           type="button" 
           class="action-btn btn-delete" 
           title="Delete this task"
+          aria-label="Delete task"
         >
-          ✕ Delete
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+          <span class="action-text">Delete</span>
         </button>
       </div>
     `;
@@ -284,13 +290,13 @@ function updateEmptyState(filteredCount) {
 
     if (tasks.length === 0) {
       emptyTitle.textContent = 'No tasks yet';
-      emptyDescription.textContent = 'Add your first task above to start organizing your day!';
+      emptyDescription.textContent = 'Add your first task and start organizing your day.';
     } else if (currentFilter === 'active') {
       emptyTitle.textContent = 'No active tasks';
-      emptyDescription.textContent = 'All caught up! All your tasks are completed.';
+      emptyDescription.textContent = 'All caught up! Every task is completed.';
     } else if (currentFilter === 'completed') {
       emptyTitle.textContent = 'No completed tasks';
-      emptyDescription.textContent = 'Complete some tasks to see them listed here.';
+      emptyDescription.textContent = 'Complete tasks to see them archived here.';
     }
   } else {
     emptyState.classList.add('hidden');
@@ -412,7 +418,7 @@ function handleFilterClick(event) {
 }
 
 function renderHeaderDate() {
-  const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
+  const options = { weekday: 'short', month: 'short', day: 'numeric' };
   const today = new Date().toLocaleDateString(undefined, options);
   currentDateEl.textContent = today;
 }
